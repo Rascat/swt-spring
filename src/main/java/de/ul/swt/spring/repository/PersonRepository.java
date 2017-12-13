@@ -2,6 +2,7 @@ package de.ul.swt.spring.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -12,7 +13,8 @@ import de.ul.swt.spring.domain.Person;
 
 @CrossOrigin
 @RepositoryRestResource(collectionResourceRel = "person", path = "person")
-public interface PersonRepository extends PagingAndSortingRepository<Person, Long> {
+public interface PersonRepository extends PagingAndSortingRepository<Person, Long>,
+        QueryDslPredicateExecutor<Person> {
 
     public Page<Person> findByNameStartsWithIgnoreCase(@Param("n") String name,
             Pageable p);

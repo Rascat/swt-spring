@@ -1,11 +1,15 @@
 package de.ul.swt.spring.domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
 
 @Entity
 public class Person {
@@ -17,8 +21,6 @@ public class Person {
     private String name;
 
     private String firstName;
-
-    private int age;
 
     private Date birthDay;
 
@@ -46,12 +48,9 @@ public class Person {
         this.firstName = firstName;
     }
 
+    @Transient
     public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+        return Years.yearsBetween(new LocalDate(birthDay), new LocalDate()).getYears();
     }
 
     public Date getBirthDay() {

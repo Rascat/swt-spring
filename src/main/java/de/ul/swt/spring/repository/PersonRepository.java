@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import de.ul.swt.spring.domain.Person;
@@ -15,5 +16,10 @@ public interface PersonRepository extends PagingAndSortingRepository<Person, Lon
 
     public Page<Person> findByNameStartsWithIgnoreCase(@Param("n") String name,
             Pageable p);
+
+    @RestResource(path = "short")
+    public Page<Person> findByNameStartsWithIgnoreCaseAndIdGreaterThanAndFirstNameIsNotLike(
+            @Param("n") String name, @Param("id") long identifier,
+            @Param("first") String firstName, Pageable p);
 
 }

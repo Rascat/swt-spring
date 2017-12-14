@@ -6,26 +6,30 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
 @Entity
-public class Event {
+@Inheritance(strategy = InheritanceType.JOINED)
+@EqualsAndHashCode(of = {}, callSuper = true)
+public class Event extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
+    @Getter
+    @Setter
     @Nonnull
     private String name;
 
+    @Getter
+    @Setter
     private Date eventDate;
 
+    @Getter
+    @Setter
     @ManyToMany
     private List<Person> participants;
 

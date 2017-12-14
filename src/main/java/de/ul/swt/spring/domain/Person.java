@@ -5,21 +5,17 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
 
-@Entity
-public class Person {
+import lombok.EqualsAndHashCode;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+@Entity
+@EqualsAndHashCode(of = {}, callSuper = true)
+public class Person extends BaseEntity {
 
     private String name;
 
@@ -32,14 +28,6 @@ public class Person {
 
     public Person() {
         events = new ArrayList<>();
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {

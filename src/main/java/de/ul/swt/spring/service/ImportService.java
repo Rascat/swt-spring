@@ -14,8 +14,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 
+import de.ul.swt.spring.domain.Event;
 import de.ul.swt.spring.domain.Person;
+import de.ul.swt.spring.repository.EventRepository;
 import de.ul.swt.spring.repository.PersonRepository;
 
 @Service
@@ -23,8 +26,12 @@ public class ImportService {
 
     private final PersonRepository personRegistry;
 
-    public ImportService(final PersonRepository personRegistry) {
+    private final EventRepository eventRepository;
+
+    public ImportService(final PersonRepository personRegistry,
+            final EventRepository eventRepository) {
         this.personRegistry = personRegistry;
+        this.eventRepository = eventRepository;
     }
 
     public void importPersons(final String fileName)
@@ -51,7 +58,15 @@ public class ImportService {
             pojo.setBirthDay(birth);
 
             personRegistry.save(pojo);
-
         }
+
+        Event myEvent = new Event();
+        myEvent.setName("University Lesson");
+        myEvent.setEventDate(new Date());
+        myEvent.setParticipants(Lists.newArrayList(personRegistry
+                .findAll(Lists.newArrayList(4L, 10L, 90L, 44L)).iterator()));
+
+        eventRepository.save(myEvent);
+
     }
 }

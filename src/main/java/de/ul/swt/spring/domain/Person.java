@@ -1,11 +1,14 @@
 package de.ul.swt.spring.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
 import org.joda.time.LocalDate;
@@ -23,6 +26,13 @@ public class Person {
     private String firstName;
 
     private Date birthDay;
+
+    @ManyToMany(mappedBy = "participants")
+    private final List<Event> events;
+
+    public Person() {
+        events = new ArrayList<>();
+    }
 
     public long getId() {
         return id;
